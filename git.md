@@ -3,22 +3,20 @@
 ## table of content
 
 - [Vocabulary](#vocabulary)
-- [Local configuration](#local-configuration)
 - [Initialization](#initialization)
 - [Fork](#Fork)
-- [Squash][#squash]
+- [Squash](#squash)
 
 ## Vocabulary
 
 * `Ahead` commit on local repository but not on remote one
 * `Behind` commit on remote repository but not on local one
 
-## Local configuration
-
 ```bash
-git config --list
-git config user.name @oliviergranoux
-git config user.email 72553159+oliviergranoux@users.noreply.github.com
+# see commits that are in current branch (AHEAD) but not in master (ie commits of the branch)
+git log orign/master..HEAD 
+# see commits that are in master (BEHIND) but not in current branch (ie commits of master to merge in branch before to merge the branch to master)
+git log HEAD..orign/master 
 ```
 
 ## Initialization
@@ -30,7 +28,7 @@ git init
 # add file
 echo "# jekyll-gallery" >> README.md
 git add README.md
-git commit -m "first commit"
+git commit -m "Initial commit"
 
 # associate local repository to remote repository
 git remote add origin https://github.com/oliviergranoux/jekyll-gallery.git
@@ -43,11 +41,7 @@ git push -u origin master # -u is short for --set-upstream
 ## Fork
 
 ```bash
-# listing of remote repositories
-git remote -v
-
 # clone the remote repository jekyll-gallery to the local repository olivier-jekyll-gallery (which is not created yet)
-git init ##needed?
 git clone https://github.com/oliviergranoux/jekyll-gallery.git olivier-jekyll-gallery 
 
 # add needed remote repositories
@@ -57,6 +51,9 @@ git remote add origin-forked https://github.com/oliviergranoux/jekyll-gallery.gi
 # disable push commands on the remote repository `origin-forked`
 # see http://sushihangover.github.io/git-set-up-a-fetch-only-remote/
 git remote set-url --push origin-forked DISABLE
+
+# listing of remote repositories
+git remote -v
 
 # link remote repositories ... (?!?)
 git pull origin-forked master
@@ -118,19 +115,3 @@ git push origin master --force
 ```
 
 
-## Others
-
-* update git on windows: `git update-git-for-windows`
-
-* modify last commit
-
-```bash
-# add staged files and set new message
-git commit --ammend -m "new message of last commit"
-# and without change the message of the commit
-git commit --no-edit
-```
-
-```bash
-git log origin/master..HEAD HEAD.. origin/master
-```
